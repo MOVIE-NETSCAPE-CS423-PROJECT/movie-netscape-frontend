@@ -81,6 +81,11 @@ export function Header() {
                 </NavLink>
                 <ul className="dropdown-menu text-small">
                   <li>
+                    <NavLink className="dropdown-item" to="/profiles">
+                      Profile
+                    </NavLink>
+                  </li>
+                  <li>
                     <hr className="dropdown-divider" />
                   </li>
                   <li>

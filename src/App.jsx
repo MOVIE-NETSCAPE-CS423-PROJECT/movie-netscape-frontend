@@ -17,6 +17,7 @@ import { Protected } from "./components/Protected";
 import { Logout } from "./pages/auth/Logout";
 import { Checkout } from "./pages/Checkout";
 import { useSelector } from "react-redux";
+import { UserProfile } from "./pages/profile/UserProfile";
 
 function App() {
   const { error } = useSelector((state) => state.auth);
@@ -34,6 +35,7 @@ function App() {
             <Route path="/favorites" element={<Favorites />} />
             <Route path="/rented" element={<Rented />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/profiles" element={<UserProfile />} />
           </Route>
 
           <Route path="/login" element={<Login />} />

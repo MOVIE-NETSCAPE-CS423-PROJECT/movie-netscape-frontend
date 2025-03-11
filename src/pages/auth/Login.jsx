@@ -14,16 +14,19 @@ export function Login() {
   // const { loading, error } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const initialValues = {
-    email: "",
+    username: "",
     password: "",
   };
-  const onSubmit = async (values) => {
-    const result = await dispatch(loginUser(values));
-    if (result.error) {
-      return;
+
+  const onSubmit = async (values, { resetForm }) => {
+    const resultAction = await dispatch(loginUser(values));
+    console.log("Login Result: ", resultAction);
+    if (loginUser.fulfilled.match(resultAction)) {
+      navigate(from, { replace: true });
+      resetForm();
     }
-    navigate(from, { replace: true });
   };
+
   return (
     <div className="d-flex justify-content-center align-items-center authorization-page">
       <div className="col-lg-6 col-md-12 col-sm-12 mx-auto">
@@ -33,7 +36,7 @@ export function Login() {
             return (
               <Form>
                 <FormControl
-                  name="email"
+                  name="username"
                   control="input"
                   placeholder="Email"
                   type="email"

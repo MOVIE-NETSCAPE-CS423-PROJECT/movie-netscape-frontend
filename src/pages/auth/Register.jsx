@@ -1,17 +1,35 @@
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { DefaultButton } from "../../components/buttons/DefaultButton";
 import { FormControl } from "../../components/form/FormControl";
 import { Form, Formik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "../../redux/authSlice";
 
 export function Register() {
+  const { loading, error } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const initialValues = {
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     email: "",
     password: "",
   };
-  const onSubmit = (values) => {
-    console.log("Form data", values);
+  const onSubmit = (values, { resetForm }) => {
+    const result = dispatch(registerUser(values));
+
+    if (registerUser.fulfilled.match(result)) {
+      navigate("/", { replace: true });
+      resetForm();
+      return;
+    }
+    if (registerUser.rejected.match(result)) {
+      console.log("error", error);
+    }
+    if (loading) {
+      console.log("loading");
+    }
   };
   return (
     <div className="d-flex justify-content-center align-items-center authorization-page">
@@ -24,7 +42,7 @@ export function Register() {
                 <div className="row">
                   <div className="col-lg-6">
                     <FormControl
-                      name="firstName"
+                      name="firstname"
                       control="input"
                       placeholder="First Name"
                       type="text"
@@ -32,7 +50,7 @@ export function Register() {
                   </div>
                   <div className="col-lg-6">
                     <FormControl
-                      name="lastName"
+                      name="lastname"
                       control="input"
                       placeholder="Last Name"
                       type="text"
@@ -51,7 +69,7 @@ export function Register() {
                   placeholder="Password"
                   type="password"
                 />
-                <DefaultButton type="submit" label="Register" />
+                <DefaultButton type="submit" label={"Register"} />
               </Form>
             );
           }}
