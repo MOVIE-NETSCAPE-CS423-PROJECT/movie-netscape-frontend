@@ -31,7 +31,7 @@ export function ForgotPassword() {
           }}
         </Formik>
         <div className="d-flex justify-content-between">
-          <p className="pt-3 lead">
+          <p className="pt-3 ">
             <Link to={"/login"}>Login</Link>
           </p>
         </div>

@@ -17,6 +17,13 @@ a {
 .movie-card {
   height: 50vh;
 }
+.empty {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 .authorization-page {
   min-height: 80svh;
 }
@@ -27,7 +34,7 @@ a {
   object-fit: cover;
 }
 .single-movie {
-  height: 90vh;
+  height: 60vh;
 }
 .single-movie img {
   width: 100%;
@@ -43,7 +50,7 @@ footer {
   width: 100%;
 }
 
-.btn {
+.btn-main {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -57,7 +64,7 @@ footer {
   text-decoration: none;
   white-space: nowrap;
 }
-.btn:hover {
+.btn-main:hover {
   background-color: #ee5b2c;
   color: #ffffff;
 }

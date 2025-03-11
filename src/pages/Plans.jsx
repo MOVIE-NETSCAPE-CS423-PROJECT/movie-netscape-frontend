@@ -69,9 +69,13 @@ export function Plans() {
                     ))}
                   </ul>
 
-                  <button type="button" className="w-100 btn btn-lg rounded-0">
+                  <a
+                    href="/checkout"
+                    type="button"
+                    className="w-100 btn btn-main btn-lg rounded-0 mt-3"
+                  >
                     Subscribe now
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>

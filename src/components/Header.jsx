@@ -1,6 +1,9 @@
 import { NavLink } from "react-router";
 import Logo from "../assets/img/movielogo.png";
+import { useSelector } from "react-redux";
 export function Header() {
+  const { favorites } = useSelector((state) => state.favorites);
+  const { user } = useSelector((state) => state.auth);
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
       <div className="container">
@@ -34,21 +37,71 @@ export function Header() {
                 Plans
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" aria-current="page" to="/favorites">
-                Favorites
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link " aria-current="page" to="/rented">
-                Watchlist
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink className="nav-link " aria-current="page" to="/login">
-                Login
-              </NavLink>
-            </li>
+            {user && (
+              <>
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link"
+                    aria-current="page"
+                    to="/favorites"
+                  >
+                    Favorites {""}
+                    <span className="badge text-bg-danger">
+                      {favorites.length}
+                    </span>
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link "
+                    aria-current="page"
+                    to="/rented"
+                  >
+                    Watchlist
+                  </NavLink>
+                </li>
+              </>
+            )}
+
+            {user ? (
+              <li className="nav-item dropdown">
+                <NavLink
+                  className="nav-link dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  role="button"
+                >
+                  <img
+                    src="https://github.com/mdo.png"
+                    alt="mdo"
+                    width="20"
+                    height="20"
+                    className="rounded-circle"
+                  />
+                </NavLink>
+                <ul className="dropdown-menu text-small">
+                  <li>
+                    <NavLink className="dropdown-item" to="/profiles">
+                      Profile
+                    </NavLink>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                  <li>
+                    <NavLink className="dropdown-item" to="/logout">
+                      Logout
+                    </NavLink>
+                  </li>
+                </ul>
+              </li>
+            ) : (
+              <li className="nav-item">
+                <NavLink className="nav-link " aria-current="page" to="/login">
+                  Login
+                </NavLink>
+              </li>
+            )}
           </ul>
         </div>
       </div>
