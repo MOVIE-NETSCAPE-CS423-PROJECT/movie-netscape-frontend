@@ -29,19 +29,16 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Header />
-
         <main className="container">
           {error && <AlertComponent message={error} type={"danger"} />}
           <Routes>
             <Route path="/" element={<Home />} />
-
             <Route element={<Protected />}>
               <Route path="/favorites" element={<Favorites />} />
               <Route path="/rented" element={<Rented />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/profiles" element={<UserProfile />} />
             </Route>
-
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot" element={<ForgotPassword />} />
