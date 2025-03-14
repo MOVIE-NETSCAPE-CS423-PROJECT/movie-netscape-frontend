@@ -2,7 +2,7 @@ import { FaAngleRight } from "react-icons/fa6";
 
 export const ListComponent = ({ profiles }) => {
   return (
-    <ul className="list-group" key={1}>
+    <ul className="list-group">
       {profiles?.map((profile) => (
         <li
           className="list-group-item d-flex justify-content-between align-items-center"

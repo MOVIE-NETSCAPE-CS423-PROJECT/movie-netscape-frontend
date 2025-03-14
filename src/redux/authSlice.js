@@ -71,7 +71,7 @@ const authSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.loading = false;
-        localStorage.setItem("user", JSON.stringify(action.payload.user));
+        // localStorage.setItem("user", JSON.stringify(action.payload.user));
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.error = action.payload.message;

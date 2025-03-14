@@ -18,39 +18,45 @@ import { Logout } from "./pages/auth/Logout";
 import { Checkout } from "./pages/Checkout";
 import { useSelector } from "react-redux";
 import { UserProfile } from "./pages/profile/UserProfile";
+import { VerifyAccount } from "./pages/auth/VerifyAccount";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
+const queryClient = new QueryClient();
 function App() {
   const { error } = useSelector((state) => state.auth);
 
   return (
-    <BrowserRouter>
-      <Header />
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Header />
 
-      <main className="container">
-        {error && <AlertComponent message={error} type={"danger"} />}
-        <Routes>
-          <Route path="/" element={<Home />} />
+        <main className="container">
+          {error && <AlertComponent message={error} type={"danger"} />}
+          <Routes>
+            <Route path="/" element={<Home />} />
 
-          <Route element={<Protected />}>
-            <Route path="/favorites" element={<Favorites />} />
-            <Route path="/rented" element={<Rented />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/profiles" element={<UserProfile />} />
-          </Route>
+            <Route element={<Protected />}>
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="/rented" element={<Rented />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/profiles" element={<UserProfile />} />
+            </Route>
 
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/subscription" element={<Plans />} />
-          <Route path={`/movie/:id`} element={<SingleMovie />} />
-          <Route path="/logout" element={<Logout />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/subscription" element={<Plans />} />
+            <Route path={`/movie/:id`} element={<SingleMovie />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="/verify" element={<VerifyAccount />} />
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </main>
-      <Footer />
-    </BrowserRouter>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+        <Footer />
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 

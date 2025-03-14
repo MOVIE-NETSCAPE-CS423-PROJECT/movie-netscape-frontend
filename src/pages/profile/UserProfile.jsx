@@ -1,8 +1,6 @@
-import { FaAngleRight } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { userProfile } from "../../redux/features/profileSlice";
 import { useEffect } from "react";
-import { ListComponent } from "../../components/ListComponent";
 
 export const UserProfile = () => {
   const { profiles } = useSelector((state) => state.profile);
@@ -10,6 +8,8 @@ export const UserProfile = () => {
   useEffect(() => {
     dispatch(userProfile());
   }, [dispatch]);
+
+  console.log(profiles);
 
   return (
     <div className="mt-4 d-flex authorization-page">
@@ -34,8 +34,8 @@ export const UserProfile = () => {
           </div>
 
           <div className="col-md-9">
-            <div className="py-5">
-              <div className="d-flex justify-content-between align-items-center mb-3">
+            <div className="py-0">
+              <div className="d-flex justify-content-between align-items-center mb-0">
                 <h4 className="">Account Details</h4>
               </div>
             </div>
@@ -87,13 +87,18 @@ export const UserProfile = () => {
                 </div>
               </div>
 
-              <div className="col-md-4">
-                <h4 className="h4">Profiles</h4>
+              {/* <div className="col-md-4">
+                <div className="d-flex justify-content-between align-content-center">
+                  <h4 className="h4">Profiles</h4>
+                  <button className="btn mb-4">
+                    <FaPlusCircle size={25} />
+                  </button>
+                </div>
                 <ListComponent
                   profiles={profiles?.profiles}
                   key={profiles?.profiles?.profileId}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -20,7 +20,7 @@ export function Register() {
     const result = dispatch(registerUser(values));
 
     if (registerUser.fulfilled.match(result)) {
-      navigate("/", { replace: true });
+      navigate("/verify", { replace: true });
       resetForm();
       return;
     }
