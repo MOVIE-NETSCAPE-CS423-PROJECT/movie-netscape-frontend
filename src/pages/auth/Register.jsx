@@ -75,7 +75,7 @@ export function Register() {
           }}
         </Formik>
         <p className="pt-3">
-          Please <Link to={"/login"}>login</Link> to get better services.{" "}
+          Please <Link to={"/login"}>login</Link>{" "}
         </p>
       </div>
     </div>

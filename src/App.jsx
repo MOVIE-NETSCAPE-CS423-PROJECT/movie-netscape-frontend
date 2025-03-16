@@ -19,6 +19,7 @@ import { Checkout } from "./pages/Checkout";
 import { useSelector } from "react-redux";
 import { UserProfile } from "./pages/profile/UserProfile";
 import { VerifyAccount } from "./pages/auth/VerifyAccount";
+import { AdminApp } from "./pages/admin/AdminApp";
 
 function App() {
   const { error } = useSelector((state) => state.auth);
@@ -36,6 +37,9 @@ function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/profiles" element={<UserProfile />} />
           </Route>
+
+          <Route path="/admin/*" element={<AdminApp />} />
+
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot" element={<ForgotPassword />} />
