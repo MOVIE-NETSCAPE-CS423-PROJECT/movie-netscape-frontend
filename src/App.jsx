@@ -18,25 +18,27 @@ import { Logout } from "./pages/auth/Logout";
 import { Checkout } from "./pages/Checkout";
 import { useSelector } from "react-redux";
 import { UserProfile } from "./pages/profile/UserProfile";
+import { VerifyAccount } from "./pages/auth/VerifyAccount";
+import { AdminApp } from "./pages/admin/AdminApp";
 
 function App() {
   const { error } = useSelector((state) => state.auth);
-
+  // console.log(Date.now());
   return (
     <BrowserRouter>
       <Header />
-
       <main className="container">
         {error && <AlertComponent message={error} type={"danger"} />}
         <Routes>
           <Route path="/" element={<Home />} />
-
           <Route element={<Protected />}>
             <Route path="/favorites" element={<Favorites />} />
             <Route path="/rented" element={<Rented />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/profiles" element={<UserProfile />} />
           </Route>
+
+          <Route path="/admin/*" element={<AdminApp />} />
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -45,6 +47,7 @@ function App() {
           <Route path="/subscription" element={<Plans />} />
           <Route path={`/movie/:id`} element={<SingleMovie />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/verify" element={<VerifyAccount />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -32,12 +32,23 @@ export const registerUser = createAsyncThunk(
   }
 );
 
+export const refreshAccessToken = createAsyncThunk(
+  "/refreshtoken",
+  async (refreshToken) => {
+    const response = await axios.post(`/api/v1/auth/refresh-token`, {
+      refreshToken,
+    });
+    return response.data;
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     user: JSON.parse(localStorage.getItem("user")) || null,
     loading: false,
     error: null,
+    status: "idle",
   },
   reducers: {
     logoutUser(state) {
@@ -60,7 +71,9 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.error = action.payload.message;
+        state.error =
+          action.payload.message ||
+          "Not able to login right now, please try again later";
         state.loading = false;
       })
       // Register
@@ -71,11 +84,23 @@ const authSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.loading = false;
-        localStorage.setItem("user", JSON.stringify(action.payload.user));
+        // localStorage.setItem("user", JSON.stringify(action.payload.user));
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.error = action.payload.message;
         state.loading = false;
+      })
+
+      // refresh
+      .addCase(refreshAccessToken.fulfilled, (state, action) => {
+        console.log("Action refresh token: ", action);
+        state.accessToken = action.payload;
+        state.loading = false;
+        localStorage.setItem("user", JSON.stringify(action.payload));
+        state.error = null;
+      })
+      .addCase(refreshAccessToken.rejected, (state, action) => {
+        console.log(state);
       });
   },
 });

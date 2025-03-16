@@ -9,7 +9,6 @@ export const userProfile = createAsyncThunk(
       const user = JSON.parse(localStorage.getItem("user"));
       const url = `${API_BASE_URL}/api/v1/accounts/${user?.userId}`;
 
-      console.log(url);
       const response = await axios.get(url, {
         headers: {
           Authorization: `Bearer ${user?.accessToken}`,
@@ -17,13 +16,13 @@ export const userProfile = createAsyncThunk(
           "ngrok-skip-browser-warning": 69420,
         },
       });
-      console.log(response.data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
   }
 );
+
 const profileSlice = createSlice({
   name: "profile",
   initialState: {
