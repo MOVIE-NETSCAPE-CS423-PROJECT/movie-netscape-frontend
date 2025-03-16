@@ -13,6 +13,7 @@ function Home() {
             <div className="input-group mb-3">
               <input
                 type="text"
+                name="search"
                 className="form-control form-control-lg"
                 placeholder="Search Movie"
                 disabled

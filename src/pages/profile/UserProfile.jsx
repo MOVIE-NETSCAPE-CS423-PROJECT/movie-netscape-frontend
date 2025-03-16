@@ -1,6 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { userProfile } from "../../redux/features/profileSlice";
 import { useEffect } from "react";
+import { ModalComponent } from "../../components/ModalComponent";
+import { Form, Formik } from "formik";
+import { FormControl } from "../../components/form/FormControl";
+import { DefaultButton } from "../../components/buttons/DefaultButton";
+import axiosInstance from "../../utils/axiosInstance";
 
 export const UserProfile = () => {
   const { profiles } = useSelector((state) => state.profile);
@@ -9,39 +14,87 @@ export const UserProfile = () => {
     dispatch(userProfile());
   }, [dispatch]);
 
-  console.log(profiles);
+  const RenderAddProfile = () => {
+    const initialValues = {
+      profileName: "",
+      profileDescription: "",
+      profileImageUrl: "",
+      profileType: "KIDS",
+      hasParentalControl: false,
+      isPrimaryProfile: false,
+    };
+
+    const handleSubmitProfileAdding = async (values) => {
+      const response = await axiosInstance.post(
+        `/api/v1/accounts/${profiles.accountId}/profiles`,
+        { values }
+      );
+      console.log("Result: ", response);
+    };
+
+    return (
+      <ModalComponent title={"Add Profile"}>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={(values) => handleSubmitProfileAdding(values)}
+        >
+          {() => (
+            <Form>
+              <FormControl
+                name="profileName"
+                control="input"
+                placeholder="Profile Name"
+                type="text"
+              />
+              <FormControl
+                name="profileImageUrl"
+                control="input"
+                placeholder="Profile Picture Url"
+                type="text"
+              />
+              <FormControl
+                name="profileDescription"
+                control="input"
+                placeholder="Profile Description"
+                type="text"
+                as="textarea"
+              />
+              <DefaultButton type={"submit"} label={"Add Profile"} />
+            </Form>
+          )}
+        </Formik>
+      </ModalComponent>
+    );
+  };
 
   return (
     <div className="mt-4 d-flex authorization-page">
       <div className="container">
         <div className="row">
-          <div className="col-md-3 border-right">
+          <div
+            className="col-md-12 d-flex justify-content-center align-items-center text-center py-2 rounded"
+            style={{ background: "gray" }}
+          >
             <div className="d-flex flex-column ">
               <img
-                className=" mt-5 mb-3"
+                className="py-2 mb-3 rounded-circle"
                 width="150px"
                 src="https://newprofilepic.photo-cdn.net//assets/images/article/profile.jpg?90af0c8"
               />
               <span className="font-weight-bold">{"Firstname Lastname"}</span>
               <span className="text-black-50">{profiles?.userId}</span>
               <span className="text-black-50">
-                Current Profile: {profiles?.currentAccountPlanName}
-              </span>
-              <span className="text-black-50">
-                Status: {profiles?.accountStatus}
+                {profiles?.currentAccountPlanName}, {profiles?.accountStatus}
               </span>
             </div>
           </div>
 
-          <div className="col-md-9">
-            <div className="py-0">
-              <div className="d-flex justify-content-between align-items-center mb-0">
-                <h4 className="">Account Details</h4>
-              </div>
-            </div>
-
+          <div className="col-md-12 mt-5">
             <div className="row">
-              <div className="col-md-8">
+              <div className="col-md-6">
+                <div className="d-flex justify-content-between align-items-center mb-0">
+                  <h4 className="">Account Details</h4>
+                </div>
                 <div className="row">
                   <div className="col-md-12 mb-3">
                     <label className="labels">First Name</label>
@@ -87,22 +140,38 @@ export const UserProfile = () => {
                 </div>
               </div>
 
-              {/* <div className="col-md-4">
-                <div className="d-flex justify-content-between align-content-center">
-                  <h4 className="h4">Profiles</h4>
-                  <button className="btn mb-4">
-                    <FaPlusCircle size={25} />
+              <div className="col-md-6">
+                <div className="d-flex justify-content-between align-items-center">
+                  <h4>Profiles</h4>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop"
+                  >
+                    Add
                   </button>
                 </div>
-                <ListComponent
-                  profiles={profiles?.profiles}
-                  key={profiles?.profiles?.profileId}
-                />
-              </div> */}
+                <div className="list-group rounded-0  my-3">
+                  {profiles?.profiles.map((profile) => (
+                    <button
+                      key={profile.id}
+                      type="button"
+                      className="d-flex list-group-item list-group-item-action justify-content-between align-items-center"
+                    >
+                      <span>{profile.profileName}</span>
+                      <span className="badge badge-default badge-pill text-dark">
+                        14
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <RenderAddProfile />
     </div>
   );
 };
