@@ -1,14 +1,30 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { DefaultButton } from "../../components/buttons/DefaultButton";
 import { Form, Formik } from "formik";
 import { FormControl } from "../../components/form/FormControl";
+import axios from "axios";
+import { API_BASE_URL } from "../../../config";
 
 export function ForgotPassword() {
+  const navigate = useNavigate();
+
   const initialValues = {
     email: "",
   };
-  const onSubmit = (values) => {
-    console.log("Form data", values);
+  const onSubmit = async (values, { resetForm }) => {
+    try {
+      const reset = await axios.post(
+        `${API_BASE_URL}/api/v1/auth/forgot-password/${values.email}`
+      );
+      if (reset.status == 200) {
+        navigate("/verify", {
+          state: { type: "forgot-password", email: values.email },
+        });
+        resetForm();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <div className="d-flex justify-content-center align-items-center authorization-page">

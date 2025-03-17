@@ -16,19 +16,21 @@ export function Register() {
     email: "",
     password: "",
   };
-  const onSubmit = (values, { resetForm }) => {
-    const result = dispatch(registerUser(values));
+  const onSubmit = async (values, { resetForm }) => {
+    let data = {
+      ...values,
+      userSelectedPlan: {
+        planName: "Default Profile",
+        maxMoviesPerProfileOnActiveSubscription: 0,
+        maxMoviesPerProfileOnNotActiveSubscription: 0,
+      },
+    };
 
+    const result = await dispatch(registerUser(data));
+    console.log(result);
     if (registerUser.fulfilled.match(result)) {
-      navigate("/verify", { replace: true });
+      navigate("/verify");
       resetForm();
-      return;
-    }
-    if (registerUser.rejected.match(result)) {
-      console.log("error", error);
-    }
-    if (loading) {
-      console.log("loading");
     }
   };
   return (
@@ -69,7 +71,9 @@ export function Register() {
                   placeholder="Password"
                   type="password"
                 />
-                <DefaultButton type="submit" label={"Register"} />
+                <div className="col-lg-6 col-sm-12">
+                  <DefaultButton type="submit" label={"Register"} />
+                </div>
               </Form>
             );
           }}

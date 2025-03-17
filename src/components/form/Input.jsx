@@ -4,9 +4,9 @@ export function Input({ name, placeholder, type, ...rest }) {
   return (
     <div className="mb-3">
       {/* <div className="form-control"> */}
-      <label htmlFor={name} className="form-label">
+      {/* <label htmlFor={name} className="form-label">
         {placeholder}
-      </label>
+      </label> */}
       <Field
         className="form-control form-control-lg"
         placeholder={placeholder}

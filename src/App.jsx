@@ -19,7 +19,11 @@ import { Checkout } from "./pages/Checkout";
 import { useSelector } from "react-redux";
 import { UserProfile } from "./pages/profile/UserProfile";
 import { VerifyAccount } from "./pages/auth/VerifyAccount";
-import { AdminApp } from "./pages/admin/AdminApp";
+import { IndexPage } from "./pages/admin/IndexPage";
+import { MovieIndex } from "./pages/admin/MovieIndex";
+import { PlanIndex } from "./pages/admin/PlanIndex";
+import { RatingIndex } from "./pages/admin/RatingIndex";
+import { ChangePassword } from "./pages/auth/ChangePassword";
 
 function App() {
   const { error } = useSelector((state) => state.auth);
@@ -38,7 +42,11 @@ function App() {
             <Route path="/profiles" element={<UserProfile />} />
           </Route>
 
-          <Route path="/admin/*" element={<AdminApp />} />
+          <Route element={<IndexPage />}>
+            <Route path={"/movies"} element={<MovieIndex />} />
+            <Route path={"/plans"} element={<PlanIndex />} />
+            <Route path={"/rating"} element={<RatingIndex />} />
+          </Route>
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -48,6 +56,7 @@ function App() {
           <Route path={`/movie/:id`} element={<SingleMovie />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/verify" element={<VerifyAccount />} />
+          <Route path="/change-password" element={<ChangePassword />} />
 
           <Route path="*" element={<NotFound />} />
         </Routes>

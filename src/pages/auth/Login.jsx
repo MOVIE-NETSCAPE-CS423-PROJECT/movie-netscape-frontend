@@ -47,7 +47,9 @@ export function Login() {
                   placeholder="Password"
                   type="password"
                 />
-                <DefaultButton type="submit" label="Login" />
+                <div className="col-lg-6 col-sm-12">
+                  <DefaultButton type="submit" label="Login" />
+                </div>
               </Form>
             );
           }}

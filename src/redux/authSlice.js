@@ -82,12 +82,12 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        state.user = action.payload.user;
+        // state.user = action.payload.user;
         state.loading = false;
         // localStorage.setItem("user", JSON.stringify(action.payload.user));
       })
       .addCase(registerUser.rejected, (state, action) => {
-        state.error = action.payload.message;
+        state.error = action.payload.response.message;
         state.loading = false;
       })
 
