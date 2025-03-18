@@ -24,6 +24,7 @@ import { MovieIndex } from "./pages/admin/MovieIndex";
 import { PlanIndex } from "./pages/admin/PlanIndex";
 import { RatingIndex } from "./pages/admin/RatingIndex";
 import { ChangePassword } from "./pages/auth/ChangePassword";
+import { AllAccounts } from "./pages/admin/AllAccounts";
 
 function App() {
   const { error } = useSelector((state) => state.auth);
@@ -46,6 +47,7 @@ function App() {
             <Route path={"/movies"} element={<MovieIndex />} />
             <Route path={"/plans"} element={<PlanIndex />} />
             <Route path={"/rating"} element={<RatingIndex />} />
+            <Route path={"/all-accounts"} element={<AllAccounts />} />
           </Route>
 
           <Route path="/login" element={<Login />} />

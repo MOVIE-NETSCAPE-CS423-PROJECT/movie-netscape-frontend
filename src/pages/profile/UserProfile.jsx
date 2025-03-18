@@ -5,7 +5,7 @@ import { ModalComponent } from "../../components/ModalComponent";
 import { Form, Formik } from "formik";
 import { FormControl } from "../../components/form/FormControl";
 import { DefaultButton } from "../../components/buttons/DefaultButton";
-import axiosInstance from "../../utils/axiosInstance";
+import axiosInstance from "../../utils/refreshToken/axiosInstance";
 
 export const UserProfile = () => {
   const { profiles, loading } = useSelector((state) => state.profile);
@@ -27,11 +27,20 @@ export const UserProfile = () => {
     };
 
     const handleSubmitProfileAdding = async (values) => {
-      const response = await axiosInstance.post(
-        `/api/v1/accounts/${profiles.accountId}/profiles`,
-        { values }
-      );
-      console.log("Result: ", response);
+      // console.log(values);
+      try {
+        let data = JSON.stringify(values);
+
+        const response = await axiosInstance.post(
+          `/api/v1/accounts/${profiles.accountId}/profiles`,
+          data,
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        );
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     return (
@@ -67,6 +76,32 @@ export const UserProfile = () => {
         </Formik>
       </ModalComponent>
     );
+  };
+  const initialValues = {
+    firstname: profiles?.firstName,
+    lastname: profiles?.lastName,
+    email: "",
+    street: "",
+    city: "",
+    state: "",
+    zip: "",
+    profileImageUrl: "",
+  };
+  const updateUser = async (values) => {
+    try {
+      let data = JSON.stringify(values);
+
+      const response = await axiosInstance.put(
+        `/api/v1/users/update-info`,
+        data,
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -127,14 +162,18 @@ export const UserProfile = () => {
                         aria-labelledby="panelsStayOpen-headingTwo"
                       >
                         <div className="accordion-body">
-                          <Formik initialValues={{}}>
+                          <Formik
+                            initialValues={initialValues}
+                            onSubmit={(values) => updateUser(values)}
+                            enableReinitialize={true}
+                          >
                             {() => (
                               <Form>
                                 <div className="row">
                                   <h6 className="h6">Bio</h6>
                                   <div className="col-lg-12 col-md-6 vol-sm-12">
                                     <FormControl
-                                      name="profileName"
+                                      name="profileImageUrl"
                                       control="input"
                                       placeholder="Profile Image Url"
                                       type="text"
@@ -142,7 +181,7 @@ export const UserProfile = () => {
                                   </div>
                                   <div className="col-lg-6 col-md-6 vol-sm-12">
                                     <FormControl
-                                      name="profileName"
+                                      name="firstname"
                                       control="input"
                                       placeholder="First Name"
                                       type="text"
@@ -150,7 +189,7 @@ export const UserProfile = () => {
                                   </div>
                                   <div className="col-lg-6 col-md-6 vol-sm-12">
                                     <FormControl
-                                      name="profileName"
+                                      name="lastname"
                                       control="input"
                                       placeholder="Last Name"
                                       type="text"
@@ -159,7 +198,7 @@ export const UserProfile = () => {
                                   <h6 className="h6">Address</h6>
                                   <div className="col-lg-12 col-md-6 vol-sm-12">
                                     <FormControl
-                                      name="profileName"
+                                      name="street"
                                       control="input"
                                       placeholder="Street"
                                       type="text"
@@ -167,7 +206,7 @@ export const UserProfile = () => {
                                   </div>
                                   <div className="col-lg-4 col-md-6 vol-sm-12">
                                     <FormControl
-                                      name="profileName"
+                                      name="city"
                                       control="input"
                                       placeholder="City"
                                       type="text"
@@ -175,7 +214,7 @@ export const UserProfile = () => {
                                   </div>
                                   <div className="col-lg-5 col-md-6 vol-sm-12">
                                     <FormControl
-                                      name="profileName"
+                                      name="state"
                                       control="input"
                                       placeholder="State"
                                       type="text"
@@ -183,7 +222,7 @@ export const UserProfile = () => {
                                   </div>
                                   <div className="col-lg-3 col-md-6 vol-sm-12">
                                     <FormControl
-                                      name="profileName"
+                                      name="zip"
                                       control="input"
                                       placeholder="Zip"
                                       type="text"

@@ -1,4 +1,7 @@
 import { NavLink, Outlet } from "react-router";
+import axiosInstance from "../../utils/refreshToken/axiosInstance";
+import { API_BASE_URL } from "../../../config";
+import { useEffect } from "react";
 
 export const IndexPage = () => {
   return (
@@ -17,6 +20,11 @@ export const IndexPage = () => {
                   <li className="list-group-item py-3">
                     <NavLink className="nav-link" to={"/plans"}>
                       Manage Plans
+                    </NavLink>
+                  </li>
+                  <li className="list-group-item py-3">
+                    <NavLink className="nav-link" to={"/all-accounts"}>
+                      Registered Accounts
                     </NavLink>
                   </li>
                 </ul>
