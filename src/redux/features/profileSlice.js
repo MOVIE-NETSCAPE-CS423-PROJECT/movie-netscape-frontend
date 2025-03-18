@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_BASE_URL } from "../../../config";
+import axiosInstance from "../../utils/refreshToken/axiosInstance";
 
 export const userProfile = createAsyncThunk(
   "profiles",
@@ -9,13 +10,20 @@ export const userProfile = createAsyncThunk(
       const user = JSON.parse(localStorage.getItem("user"));
       const url = `${API_BASE_URL}/api/v1/accounts/${user?.userId}`;
 
-      const response = await axios.get(url, {
+      // const response = await axios.get(url, {
+      //   headers: {
+      //     Authorization: `Bearer ${user?.accessToken}`,
+      //     "Content-Type": "application/json",
+      //     "ngrok-skip-browser-warning": 69420,
+      //   },
+      // });
+      // return response.data;
+      const response = await axiosInstance.get(url, {
         headers: {
-          Authorization: `Bearer ${user?.accessToken}`,
-          "Content-Type": "application/json",
-          "ngrok-skip-browser-warning": 69420,
+          "ngrok-skip-browser-warning": "69420", // Add the custom header for this request
         },
       });
+      console.log("Profile", response);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
