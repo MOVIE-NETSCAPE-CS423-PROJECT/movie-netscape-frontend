@@ -24,6 +24,13 @@ a {
   align-items: center;
   flex-direction: column;
 }
+.empty-home {
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 .authorization-page {
   min-height: 80svh;
 }

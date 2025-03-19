@@ -4,7 +4,7 @@ import { MovieCard } from "../components/MovieCard";
 function Home() {
   const { movieList } = useSelector((state) => state.movies);
   const { user } = useSelector((state) => state.auth);
-
+  console.log(movieList);
   return (
     <div className="mt-4">
       {user ? (
@@ -29,9 +29,17 @@ function Home() {
       )}
 
       <div className="row">
-        {movieList.map((movie) => (
-          <MovieCard movie={movie} key={movie.id} />
-        ))}
+        {movieList == null ? (
+          <div className="empty-home ">
+            <div className="d-flex justify-content-center align-items-center flex-wrap">
+              <h1 className="display-1">404</h1>
+            </div>
+          </div>
+        ) : (
+          movieList.map((movie, index) => (
+            <MovieCard movie={movie} key={index} />
+          ))
+        )}
       </div>
     </div>
   );
